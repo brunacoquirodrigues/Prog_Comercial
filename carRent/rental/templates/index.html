@@ -24,18 +24,28 @@
     <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="index.html">CarRent</a>
+        <a class="navbar-brand" href="/">CarRent</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="about.html">Cadastre-se</a>
+              <a class="nav-link">{{ user.first_name }} {{user.last_name}}</a>
+            </li>
+            
+            <li class="nav-item"> 
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'signup' %}">Cadastre-se</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="services.html">Login</a>
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
+            {% endif %}
             {% comment %} <li class="nav-item">
               <a class="nav-link" href="contact.html">Contact</a>
             </li>
