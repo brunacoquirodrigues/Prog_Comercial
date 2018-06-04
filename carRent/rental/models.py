@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime as tempo
 from django.core.validators import MinValueValidator, MaxValueValidator
 from core.models import ProfileUsuario
+from django.urls import reverse
 
 class Cor(models.Model):
     cor = models.CharField(max_length=30, blank=False, null=False)
@@ -32,8 +33,11 @@ class Carro(models.Model):
             help_text="Use o formato: AAAA")
     cor_carro_fk = models.ForeignKey(Cor, on_delete=models.CASCADE)
     marca_carro_fk = models.ForeignKey(Marca, on_delete=models.CASCADE, default=0)
-    #placa unique
+    carr_pic = models.ImageField(upload_to="carr_pic/", blank=True, null=True)
     alugado = models.BooleanField(blank=False, null=False)
+
+    def get_absolute_url(self):
+        return reverse('carro-detail', args=[str(self.id)])
 
     class Meta:
         verbose_name = 'Carro'
@@ -53,7 +57,7 @@ class Informacao(models.Model):
         verbose_name_plural = 'Informações'
 
     def __str__(self):
-        pass
+        return "Informação do carro: %s Tempo de uso: %s Km Rodados: %s " %(self.info_carro.modelo, self.tempo_de_uso, self.km_rodados)
 
 class Aluguel(models.Model):
     usuario_fk = models.ForeignKey(ProfileUsuario, on_delete=models.CASCADE, related_name='aluguel')
