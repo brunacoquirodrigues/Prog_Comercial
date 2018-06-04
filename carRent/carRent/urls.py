@@ -19,13 +19,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView, RedirectView
-
+from rental.views import CarroListView
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name = "homepage.html"),name='home'),
+    path('', CarroListView.as_view(),name='home'),
     path('admin/', admin.site.urls),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('conta/', include('rental.urls')),
     path('conta/', include('django.contrib.auth.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
